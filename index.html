@@ -189,15 +189,25 @@ let o=document.getElementById('orders');o.innerHTML=orders.length?orders.map(x=>
 function clearData(){if(confirm('هل تريد مسح جميع بيانات التطبيق؟')){localStorage.clear();cart=[];fav=[];orders=[];save();location.reload()}}
 renderHome();updateBadge();
 </script>
+renderHome();
+updateBadge();
+</script>
+
 <script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
-}
-</script>
-</body>
-  <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
+window.addEventListener('load', function(){
+navigator.serviceWorker.register('./sw.js')
+.then(function(){
+console.log('Service Worker تم تشغيله');
+})
+.catch(function(error){
+console.log('خطأ Service Worker:', error);
+});
+});
 }
 </script>
+
+</body>
 </html>
+  
+
