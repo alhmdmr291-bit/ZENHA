@@ -1,24 +1,25 @@
 {
-  "name": "ZENHA",
+  "id": "/ZENHA/",
+  "name": "ZENHA - متجر إلكتروني",
   "short_name": "ZENHA",
-  "description": "متجر ZENHA الإلكتروني",
+  "description": "متجر ZENHA الإلكتروني للتسوق",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "/ZENHA/",
   "scope": "/ZENHA/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#f6f6fa",
   "theme_color": "#5b4bdb",
-  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
