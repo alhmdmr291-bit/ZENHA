@@ -1,37 +1,33 @@
-const CACHE_NAME = "zenha-v1";
-const APP_SHELL = [
-  "./",
-  "./index.html",
-  "./manifest.json",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png"
+const CACHE_NAME = "ZENHA-v1";
+
+const FILES_TO_CACHE = [
+  "/ZENHA/",
+  "/ZENHA/index.html",
+  "/ZENHA/manifest.json",
+  "/ZENHA/icon-192.png",
+  "/ZENHA/icon-512.png"
 ];
 
-self.addEventListener("install", event => {
+// تثبيت Service Worker
+self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(APP_SHELL))
-      .then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(FILES_TO_CACHE);
+    })
   );
+  self.skipWaiting();
 });
 
-self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
-  );
+// تشغيل Service Worker
+self.addEventListener("activate", (event) => {
+  event.waitUntil(self.clients.claim());
 });
 
-self.addEventListener("fetch", event => {
-  if (event.request.method !== "GET") return;
+// جلب الملفات من الكاش عند الحاجة
+self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      return cached || fetch(event.request).then(response => {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-        return response;
-      }).catch(() => caches.match("./index.html"));
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
     })
   );
 });
