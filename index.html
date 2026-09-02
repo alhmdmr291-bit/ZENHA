@@ -65,6 +65,10 @@ font-size:35px;
 </style>
 </head>
 <body>
+ <div id="splash">
+<img src="icon-192.png">
+<h1>ZENHA</h1>
+</div>
 <div class="app">
 <header>
 <div class="logo">ZENHA</div>
@@ -223,7 +227,11 @@ console.log('خطأ Service Worker:', error);
 });
 }
 </script>
-
+<script>
+setTimeout(()=>{
+document.getElementById("splash").style.display="none";
+},1500);
+</script>
 </body>
  <div id="splash">
 <img src="icon-192.png">
