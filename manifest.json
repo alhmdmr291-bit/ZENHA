@@ -1,0 +1,9 @@
+{
+  "name":"ZENHA",
+  "short_name":"ZENHA",
+  "start_url":"./customer/",
+  "display":"standalone",
+  "background_color":"#f6f6fa",
+  "theme_color":"#5b4bdb",
+  "icons":[{"src":"./icon-192.svg","sizes":"192x192","type":"image/svg+xml"}]
+}
