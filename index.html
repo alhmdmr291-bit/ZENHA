@@ -166,7 +166,7 @@ window.scrollTo(0,0)
 function catName(id){let c=categories.find(x=>x.id===id);return c?c.name:'كل المنتجات'}
 function productCard(p){
 let liked=fav.includes(p.id);
-return `<article class="product" onclick="openProduct(${p.id})"><button class="heart" onclick="event.stopPropagation();toggleFav(${p.id})">${liked?'❤️':'♡'}</button><div class="product-img">${p.icon}</div><div class="rating">★ ${p.rating}</div><h3>${p.name}</h3><div class="price">${money(p.price)} <span class="old">${money(p.old)}</span></div><button class="add" onclick="event.stopPropagation();addCart(${p.id})">أضف للسلة</button></article>`
+return `<article class="product" onclick="openProduct(${p.id})"><button class="heart" onclick="event.stopPropagation();toggleFav(${p.id})">${liked?'❤️':'♡'}</button><div class="product-img"><img src="${p.image}"></div>div class="rating">★ ${p.rating}</div><h3>${p.name}</h3><div class="price">${money(p.price)} <span class="old">${money(p.old)}</span></div><button class="add" onclick="event.stopPropagation();addCart(${p.id})">أضف للسلة</button></article>`
 }
 function renderCatsHome(){document.getElementById('homeCats').innerHTML=categories.slice(0,6).map(c=>`<button class="cat" onclick="filterCat('${c.id}')"><div class="cat-icon">${c.icon}</div><span>${c.name}</span></button>`).join('')}
 function renderHome(){document.getElementById('homeProducts').innerHTML=products.slice(0,4).map(productCard).join('');renderCatsHome()}
