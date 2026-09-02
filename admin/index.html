@@ -1,1 +1,78 @@
-
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#5b4bdb">
+<title>ZENHA — لوحة الإدارة</title>
+<style>
+:root{--p:#5b4bdb;--p2:#806ff0;--bg:#f6f6fa;--card:#fff;--text:#17171a;--muted:#777;--border:#ececf2;--danger:#e74c3c}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Tahoma,sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:900px;margin:auto;padding:22px}.head{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border-radius:24px;padding:24px;margin-bottom:18px}
+.head h1{margin:0 0 8px}.head p{margin:0;opacity:.9}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.card{background:#fff;border-radius:20px;padding:18px;box-shadow:0 5px 22px #19144612;margin-bottom:15px}
+.field{margin-bottom:12px}.field label{display:block;font-size:12px;color:#666;margin-bottom:6px}.field input,.field select{width:100%;padding:12px;border:1px solid var(--border);border-radius:12px}
+button{border:0;border-radius:12px;padding:12px 15px;font-weight:bold;cursor:pointer}.primary{background:var(--p);color:#fff}.muted{background:#eee;color:#333}.danger{background:#fee;color:var(--danger)}
+.actions{display:flex;gap:8px}.actions button{flex:1}.product{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:15px;padding:10px;margin:8px 0}.thumb{width:65px;height:65px;border-radius:12px;background:#f1f0f8;display:grid;place-items:center;font-size:28px;overflow:hidden}.thumb img{width:100%;height:100%;object-fit:contain}.info{flex:1}.info h3{font-size:14px;margin:0 0 5px}.info small{color:var(--muted)}.badge{display:inline-block;background:#eee;padding:5px 9px;border-radius:20px;font-size:11px;margin-top:8px}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.wrap{padding:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <h1>⚙️ لوحة إدارة ZENHA</h1>
+    <p>هذه اللوحة منفصلة عن تطبيق الزبون.</p>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h2 id="formTitle">➕ إضافة منتج</h2>
+      <div class="field"><label>اسم المنتج</label><input id="name" placeholder="اسم المنتج"></div>
+      <div class="field"><label>السعر</label><input id="price" type="number" placeholder="السعر"></div>
+      <div class="field"><label>السعر القديم</label><input id="old" type="number" placeholder="السعر القديم"></div>
+      <div class="field"><label>القسم</label><select id="cat"></select></div>
+      <div class="field"><label>التقييم</label><input id="rating" type="number" min="0" max="5" step=".1" value="5"></div>
+      <div class="field"><label>صورة المنتج</label><input id="image" type="file" accept="image/*"></div>
+      <div id="preview" style="display:none;height:160px;background:#f1f0f8;border-radius:15px;margin-bottom:12px;overflow:hidden"></div>
+      <div class="actions"><button class="primary" onclick="saveProduct()">💾 حفظ</button><button class="muted" onclick="resetForm()">إلغاء</button></div>
+    </div>
+    <div class="card">
+      <h2>📦 المنتجات</h2>
+      <div id="count" class="badge"></div>
+      <div id="list"></div>
+    </div>
+  </div>
+</div>
+<script>
+const categories=[
+{id:'clothes',name:'ملابس'},{id:'electronics',name:'إلكترونيات'},
+{id:'beauty',name:'جمال وعناية'},{id:'home',name:'المنزل'},
+{id:'accessories',name:'إكسسوارات'}
+];
+const defaults=[
+{id:1,name:'سماعات لاسلكية Pro',cat:'electronics',price:39000,old:45000,image:'',icon:'🎧',rating:4.8},
+{id:2,name:'ساعة ذكية Ultra',cat:'electronics',price:75000,old:85000,image:'',icon:'⌚',rating:4.7}
+];
+let products=JSON.parse(localStorage.getItem('zenha_products')||'null')||defaults;
+let editing=null,imageData='';
+cat.innerHTML=categories.map(c=>'<option value="'+c.id+'">'+c.name+'</option>').join('');
+image.onchange=e=>{
+ const f=e.target.files[0]; if(!f)return;
+ const r=new FileReader();r.onload=()=>{imageData=r.result;preview.style.display='block';preview.innerHTML='<img src="'+imageData+'" style="width:100%;height:100%;object-fit:contain">'};r.readAsDataURL(f)
+};
+function money(n){return Number(n).toLocaleString('ar-SA')+' ل.س'}
+function persist(){localStorage.setItem('zenha_products',JSON.stringify(products))}
+function resetForm(){editing=null;imageData='';formTitle.textContent='➕ إضافة منتج';name.value='';price.value='';old.value='';rating.value='5';image.value='';preview.style.display='none';preview.innerHTML=''}
+function saveProduct(){
+ if(!name.value.trim()||!price.value){alert('اكتب اسم المنتج والسعر');return}
+ if(editing!==null){
+   const p=products.find(x=>x.id===editing);p.name=name.value.trim();p.price=+price.value;p.old=+old.value||p.price;p.cat=cat.value;p.rating=+rating.value||5;if(imageData)p.image=imageData;
+ }else products.unshift({id:Date.now(),name:name.value.trim(),price:+price.value,old:+old.value||+price.value,cat:cat.value,rating:+rating.value||5,image:imageData,icon:'🛍️'});
+ persist();resetForm();render()
+}
+function edit(id){const p=products.find(x=>x.id===id);editing=id;formTitle.textContent='✏️ تعديل منتج';name.value=p.name;price.value=p.price;old.value=p.old;cat.value=p.cat;rating.value=p.rating||5;imageData=p.image||'';if(imageData){preview.style.display='block';preview.innerHTML='<img src="'+imageData+'" style="width:100%;height:100%;object-fit:contain">'}window.scrollTo(0,0)}
+function del(id){if(!confirm('حذف المنتج؟'))return;products=products.filter(p=>p.id!==id);persist();render()}
+function render(){count.textContent='عدد المنتجات: '+products.length;list.innerHTML=products.map(p=>'<div class="product"><div class="thumb">'+(p.image?'<img src="'+p.image+'">':p.icon)+'</div><div class="info"><h3>'+p.name+'</h3><small>'+money(p.price)+'</small></div><button class="muted" onclick="edit('+p.id+')">✏️</button><button class="danger" onclick="del('+p.id+')">🗑️</button></div>').join('')}
+render();
+</script>
+</body>
+</html>
