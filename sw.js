@@ -1,195 +1,24 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#5b4bdb">
-<link rel="manifest" href="./manifest.json">
-<link rel="icon" href="icon-192.svg">
-<title>ZENHA - تطبيق متجر إلكتروني</title>
-<style>
-.product-img img{width:100%;height:100%;object-fit:contain;border-radius:15px}
-:root{--primary:#5b4bdb;--primary2:#806ff0;--bg:#f6f6fa;--card:#fff;--text:#17171a;--muted:#777;--border:#ececf2;--danger:#e74c3c;--shadow:0 5px 22px rgba(25,20,70,.07)}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:Arial,Tahoma,sans-serif;background:var(--bg);color:var(--text);padding-bottom:82px}
-button,input{font:inherit}button{cursor:pointer;border:0}
-.app{max-width:700px;margin:auto;min-height:100vh}
-header{position:sticky;top:0;z-index:20;background:#fff;height:66px;display:flex;align-items:center;gap:10px;padding:10px 14px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
-.logo{font-size:23px;font-weight:900;letter-spacing:2px;color:var(--primary);white-space:nowrap}
-.search{height:44px;flex:1;background:#f0f0f4;border-radius:14px;display:flex;align-items:center;padding:0 12px;gap:8px}
-.search input{width:100%;border:0;outline:0;background:transparent;font-size:14px}
-.icon-btn{width:42px;height:42px;border-radius:13px;background:#f1f0fa;font-size:20px;position:relative}
-.badge{position:absolute;top:-4px;left:-3px;background:var(--danger);color:#fff;border-radius:20px;min-width:18px;height:18px;font-size:10px;display:grid;place-items:center}
-.page{display:none;padding:18px}.page.active{display:block}
-.hero{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;border-radius:25px;padding:25px 20px;min-height:190px;display:flex;flex-direction:column;justify-content:center;margin-bottom:22px;overflow:hidden}
-.hero small{opacity:.85;margin-bottom:8px}.hero h1{font-size:27px;margin-bottom:9px}.hero p{opacity:.9;line-height:1.7;margin-bottom:16px}
-.primary{background:var(--primary);color:#fff;padding:12px 17px;border-radius:13px;font-weight:bold}.hero .primary{background:#fff;color:var(--primary);width:max-content}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin:18px 0 13px}.section-head h2{font-size:19px}.link{color:var(--primary);font-size:13px;background:none}
-.cat-scroll{display:flex;gap:12px;overflow:auto;padding-bottom:4px}.cat{min-width:82px;text-align:center;background:none}.cat-icon{height:65px;width:65px;margin:auto auto 7px;background:#fff;border-radius:19px;display:grid;place-items:center;font-size:29px;box-shadow:var(--shadow)}.cat span{font-size:12px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-.product{background:#fff;border-radius:19px;padding:10px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.product-img{height:145px;border-radius:15px;background:#f1f0f8;display:grid;place-items:center;font-size:58px;margin-bottom:10px}
-.product h3{font-size:14px;line-height:1.5;margin-bottom:5px}.price{font-weight:900;color:var(--primary);font-size:15px;margin-bottom:9px}.old{text-decoration:line-through;color:#aaa;font-size:11px;margin-right:5px}
-.add{width:100%;background:var(--primary);color:#fff;padding:10px;border-radius:11px;font-weight:bold}.heart{position:absolute;top:17px;left:17px;width:35px;height:35px;border-radius:50%;background:#fff;font-size:19px;box-shadow:0 2px 8px #0001}
-.rating{font-size:11px;color:#f5a623;margin-bottom:7px}
-.category-card{background:#fff;border-radius:22px;padding:22px 15px;min-height:175px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:var(--shadow)}.category-card .cat-icon{margin:0 0 12px;width:72px;height:72px;font-size:34px}.category-card h3{font-size:16px;margin-bottom:7px}.category-card p{color:var(--muted);font-size:11px}
-.bottom{position:fixed;z-index:30;bottom:0;left:0;right:0;height:72px;background:#fff;display:flex;justify-content:space-around;align-items:center;box-shadow:0 -3px 18px #00000012}.nav{width:25%;height:62px;background:none;color:#777;font-size:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}.nav b{font-size:22px}.nav.active{color:var(--primary);font-weight:bold}
-.empty{text-align:center;padding:65px 20px;color:var(--muted)}.empty .big{font-size:60px;margin-bottom:16px}.empty h2{color:var(--text);margin-bottom:8px}
-.list-item{background:#fff;border-radius:18px;padding:12px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:var(--shadow)}.thumb{width:72px;height:72px;border-radius:14px;background:#f1f0f8;display:grid;place-items:center;font-size:34px;flex-shrink:0}.item-info{flex:1}.item-info h3{font-size:14px;margin-bottom:5px}.qty{display:flex;align-items:center;gap:10px;margin-top:8px}.qty button{width:28px;height:28px;border-radius:8px;background:#eee}.remove{background:none;color:var(--danger);font-size:12px}
-.total-box{background:#fff;border-radius:20px;padding:16px;margin-top:15px;box-shadow:var(--shadow)}.row{display:flex;justify-content:space-between;margin-bottom:11px;font-size:14px}.row.total{font-weight:900;font-size:18px;border-top:1px solid var(--border);padding-top:13px}.full{width:100%;padding:14px;border-radius:13px;background:var(--primary);color:#fff;font-weight:bold;margin-top:5px}
-.form{background:#fff;border-radius:20px;padding:17px;box-shadow:var(--shadow);margin-bottom:14px}.form h3{margin-bottom:14px}.field{margin-bottom:12px}.field label{display:block;font-size:12px;margin-bottom:6px;color:#666}.field input,.field select,.field textarea{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px;outline:0;background:#fafafd}.field textarea{min-height:85px;resize:none}
-.modal{position:fixed;inset:0;background:#0007;z-index:50;display:none;align-items:flex-end}.modal.show{display:flex}.sheet{background:#fff;width:100%;max-width:700px;margin:auto;border-radius:25px 25px 0 0;padding:20px;max-height:90vh;overflow:auto}.close{float:left;background:#eee;border-radius:50%;width:35px;height:35px}.detail-img{height:240px;background:#f1f0f8;border-radius:20px;display:grid;place-items:center;font-size:100px;margin:12px 0}.toast{position:fixed;z-index:100;bottom:88px;left:50%;transform:translateX(-50%) translateY(20px);background:#222;color:#fff;padding:11px 18px;border-radius:12px;font-size:13px;opacity:0;transition:.25s;pointer-events:none}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.tabs{display:flex;gap:8px;overflow:auto;margin-bottom:15px}.tab{background:#fff;border:1px solid var(--border);padding:9px 14px;border-radius:20px;white-space:nowrap;font-size:12px}.tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
-.order{background:#fff;padding:15px;border-radius:18px;margin-bottom:10px;box-shadow:var(--shadow)}.order strong{color:var(--primary)}
-@media(min-width:701px){.bottom{left:50%;right:auto;width:700px;transform:translateX(-50%)}.modal{align-items:center}.sheet{border-radius:25px}}
-#splash{position:fixed;inset:0;background:#5b4bdb;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white}
-#splash img{width:120px;height:120px;border-radius:25px;margin-bottom:20px}
-#splash h1{font-size:35px}
+const CACHE_NAME = "ZENHA-v2";
 
-.admin-btn{background:#f1efff;color:var(--primary);border:1px solid #ddd8ff;padding:10px 12px;border-radius:12px;font-weight:bold;width:100%;margin-top:8px}
-.admin-list{display:grid;gap:10px}.admin-product{background:#fff;border:1px solid var(--border);border-radius:16px;padding:10px;display:flex;gap:10px;align-items:center}.admin-product .mini{width:58px;height:58px;border-radius:12px;background:#f1f0f8;display:grid;place-items:center;font-size:28px;overflow:hidden;flex-shrink:0}.admin-product .mini img{width:100%;height:100%;object-fit:contain}.admin-actions{margin-right:auto;display:flex;gap:6px}.danger{background:#ffe9e7!important;color:#c0392b!important}.secondary{background:#eee;color:#333}.preview{width:100%;height:150px;border:1px dashed #d8d5e8;border-radius:14px;background:#fafafd;display:grid;place-items:center;overflow:hidden;margin-top:7px;color:#888}.preview img{max-width:100%;max-height:100%;object-fit:contain}
-</style>
-</head>
-<body>
-<div id="splash"><img src="icon-192.svg"><h1>ZENHA</h1></div>
-<div class="app">
-<header><div class="logo">ZENHA</div><div class="search">🔍 <input id="searchInput" placeholder="ابحث عن منتج..." oninput="searchProducts(this.value)"></div><button class="icon-btn" onclick="openPage('cart')">🛒<span id="cartBadge" class="badge">0</span></button></header>
-<main>
-<section id="home" class="page active">
-<div class="hero"><small>✨ أهلاً بك في ZENHA</small><h1>تسوّق أذكى، عِش أفضل</h1><p>اكتشف منتجات مختارة بأسعار رائعة وتجربة شراء سهلة.</p><button class="primary" onclick="openPage('products')">ابدأ التسوق ←</button></div>
-<div class="section-head"><h2>الأقسام</h2><button class="link" onclick="openPage('categories')">عرض الكل</button></div><div class="cat-scroll" id="homeCats"></div>
-<div class="section-head"><h2>🔥 الأكثر مبيعاً</h2><button class="link" onclick="openPage('products')">عرض الكل</button></div><div class="grid" id="homeProducts"></div>
-</section>
-<section id="categories" class="page"><div class="section-head"><h2>أقسام ZENHA</h2></div><p style="color:#777;font-size:13px;margin-bottom:16px">اختر القسم الذي تريد استكشافه</p><div class="grid" id="categoryGrid"></div></section>
-<section id="products" class="page"><div class="section-head"><h2 id="productsTitle">كل المنتجات</h2></div><div class="tabs" id="productTabs"></div><div class="grid" id="productsGrid"></div></section>
-<section id="admin" class="page">
-<div class="section-head"><button class="link" onclick="openPage('account')">← رجوع</button><h2>⚙️ إدارة المتجر</h2></div>
-<div class="form">
-<h3 id="adminFormTitle">➕ إضافة منتج جديد</h3>
-<div class="field"><label>اسم المنتج</label><input id="adminName" placeholder="مثلاً: ساعة ذكية"></div>
-<div class="field"><label>السعر</label><input id="adminPrice" type="number" min="0" placeholder="مثلاً: 75000"></div>
-<div class="field"><label>السعر القديم <small style="color:#999">(اختياري)</small></label><input id="adminOld" type="number" min="0" placeholder="مثلاً: 90000"></div>
-<div class="field"><label>القسم</label><select id="adminCat"></select></div>
-<div class="field"><label>التقييم</label><input id="adminRating" type="number" min="0" max="5" step="0.1" value="5"></div>
-<div class="field"><label>صورة المنتج</label><input id="adminImage" type="file" accept="image/*" onchange="previewAdminImage(event)"><div class="preview" id="adminPreview">📷 اختر صورة من الهاتف</div></div>
-<button class="full" onclick="saveAdminProduct()">💾 حفظ المنتج</button>
-<button class="full secondary" id="adminCancel" style="display:none" onclick="resetAdminForm()">إلغاء التعديل</button>
-</div>
-<div class="section-head"><h3>📦 منتجات المتجر</h3><span id="adminCount" style="font-size:12px;color:#777"></span></div>
-<div id="adminProducts" class="admin-list"></div>
-</section>
-<section id="cart" class="page"><div class="section-head"><h2>سلة المشتريات</h2></div><div id="cartContent"></div></section>
-<section id="account" class="page"><div class="section-head"><h2>حسابي</h2></div><div class="form"><h3>👤 بيانات الحساب</h3><div class="field"><label>الاسم</label><input id="nameInput" placeholder="اكتب اسمك"></div><div class="field"><label>رقم الجوال</label><input id="phoneInput" type="tel" placeholder="05xxxxxxxx"></div><div class="field"><label>العنوان</label><textarea id="addressInput" placeholder="عنوان التوصيل"></textarea></div><button class="full" onclick="saveAccount()">حفظ البيانات</button></div><div class="form"><h3>📦 طلباتي</h3><div id="orders"></div></div><div class="form"><h3>⚙️ إدارة المتجر</h3><p style="color:#777;font-size:12px;line-height:1.7">هذه لوحة إدارة محلية للتجربة. المنتجات المضافة هنا تُحفظ على هذا الجهاز فقط إلى أن نربط التطبيق بقاعدة بيانات.</p><button class="admin-btn" onclick="openAdmin()">⚙️ فتح لوحة إدارة المنتجات</button></div><button class="full" style="background:#eee;color:#333" onclick="clearData()">مسح بيانات التطبيق</button></section>
-</main>
-<nav class="bottom"><button class="nav active" data-page="home" onclick="openPage('home')"><b>🏠</b>الرئيسية</button><button class="nav" data-page="categories" onclick="openPage('categories')"><b>▦</b>الأقسام</button><button class="nav" data-page="cart" onclick="openPage('cart')"><b>🛒</b>السلة</button><button class="nav" data-page="account" onclick="openPage('account')"><b>👤</b>حسابي</button></nav>
-</div>
-<div id="productModal" class="modal" onclick="if(event.target===this)closeModal()"><div class="sheet"><button class="close" onclick="closeModal()">×</button><div id="detail"></div></div></div><div id="toast" class="toast"></div>
-<script>
-const categories=[{id:'clothes',name:'ملابس',icon:'👕',desc:'أحدث الملابس'},{id:'electronics',name:'إلكترونيات',icon:'📱',desc:'أجهزة وإكسسوارات'},{id:'beauty',name:'جمال وعناية',icon:'💄',desc:'منتجات الجمال والعناية'},{id:'home',name:'المنزل',icon:'🏠',desc:'كل ما تحتاجه للمنزل'},{id:'accessories',name:'إكسسوارات',icon:'⌚',desc:'إكسسوارات مميزة'},{id:'offers',name:'العروض',icon:'🎁',desc:'أفضل عروض ZENHA'}];
-const defaultProducts=[
-{id:1,name:'سماعات لاسلكية Pro',cat:'electronics',price:39000,old:45000,image:'images/clip1774673163412.png',icon:'🎧',rating:4.8},
-{id:2,name:'ساعة ذكية Ultra',cat:'electronics',price:75000,old:85000,icon:'⌚',rating:4.7},
-{id:3,name:'تيشيرت قطني فاخر',cat:'clothes',price:28000,old:35000,icon:'👕',rating:4.6},
-{id:4,name:'عطر ZENHA',cat:'beauty',price:52000,old:65000,icon:'🧴',rating:4.9},
-{id:5,name:'مصباح مكتبي LED',cat:'home',price:22000,old:28000,icon:'💡',rating:4.5},
-{id:6,name:'حقيبة يومية',cat:'accessories',price:34000,old:42000,icon:'👜',rating:4.7},
-{id:7,name:'أحمر شفاه',cat:'beauty',price:18000,old:22000,icon:'💄',rating:4.4},
-{id:8,name:'حامل جوال مكتبي',cat:'accessories',price:15000,old:19000,icon:'📱',rating:4.6},
-{id:9,name:'طقم ملابس رياضية',cat:'clothes',price:46000,old:55000,icon:'🥋',rating:4.8},
-{id:10,name:'سماعة رأس Gaming',cat:'electronics',price:68000,old:79000,icon:'🎮',rating:4.8},
-{id:11,name:'وسادة مريحة',cat:'home',price:24000,old:30000,icon:'🛏️',rating:4.5},
-{id:12,name:'نظارة شمسية',cat:'accessories',price:30000,old:38000,icon:'🕶️',rating:4.7}];
-let products=JSON.parse(localStorage.getItem('zenha_products')||'null')||defaultProducts;
-let adminEditingId=null;
-function saveProducts(){localStorage.setItem('zenha_products',JSON.stringify(products));}
-let cart=JSON.parse(localStorage.getItem('zenha_cart')||'[]'),fav=JSON.parse(localStorage.getItem('zenha_fav')||'[]'),orders=JSON.parse(localStorage.getItem('zenha_orders')||'[]'),currentCat='all';
-function money(n){return n.toLocaleString('ar-SA')+' ل.س'} function save(){localStorage.setItem('zenha_cart',JSON.stringify(cart));localStorage.setItem('zenha_fav',JSON.stringify(fav));localStorage.setItem('zenha_orders',JSON.stringify(orders));updateBadge()} function toast(t){let x=document.getElementById('toast');x.textContent=t;x.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>x.classList.remove('show'),1800)} function updateBadge(){document.getElementById('cartBadge').textContent=cart.reduce((a,x)=>a+x.qty,0)}
-function openPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.page===id));if(id==='categories')renderCategories();if(id==='products')renderProducts();if(id==='cart')renderCart();if(id==='account')renderAccount();window.scrollTo(0,0)}
-function catName(id){let c=categories.find(x=>x.id===id);return c?c.name:'كل المنتجات'}
-function productCard(p){let liked=fav.includes(p.id);return `<article class="product" onclick="openProduct(${p.id})"><button class="heart" onclick="event.stopPropagation();toggleFav(${p.id})">${liked?'❤️':'♡'}</button><div class="product-img">${p.image?`<img src="${p.image}" alt="" onerror="this.style.display='none';this.parentElement.insertAdjacentText('beforeend',${JSON.stringify(p.icon)})">`:p.icon}</div><div class="rating">★ ${p.rating}</div><h3>${p.name}</h3><div class="price">${money(p.price)} <span class="old">${money(p.old)}</span></div><button class="add" onclick="event.stopPropagation();addCart(${p.id})">أضف للسلة</button></article>`}
-function renderCatsHome(){document.getElementById('homeCats').innerHTML=categories.map(c=>`<button class="cat" onclick="filterCat('${c.id}')"><div class="cat-icon">${c.icon}</div><span>${c.name}</span></button>`).join('')} function renderHome(){document.getElementById('homeProducts').innerHTML=products.slice(0,4).map(productCard).join('');renderCatsHome()} function renderCategories(){document.getElementById('categoryGrid').innerHTML=categories.map(c=>`<button class="category-card" onclick="filterCat('${c.id}')"><div class="cat-icon">${c.icon}</div><h3>${c.name}</h3><p>${c.desc}</p></button>`).join('')} function filterCat(id){currentCat=id;openPage('products')}
-function renderProducts(){let tabs=[{id:'all',name:'الكل'},...categories];document.getElementById('productTabs').innerHTML=tabs.map(t=>`<button class="tab ${currentCat===t.id?'active':''}" onclick="currentCat='${t.id}';renderProducts()">${t.name}</button>`).join('');let arr=currentCat==='all'?products:products.filter(p=>p.cat===currentCat);document.getElementById('productsTitle').textContent=currentCat==='all'?'كل المنتجات':catName(currentCat);document.getElementById('productsGrid').innerHTML=arr.length?arr.map(productCard).join(''):`<div class="empty" style="grid-column:1/-1"><div class="big">🔎</div><h2>لا توجد منتجات</h2></div>`}
-function searchProducts(q){if(!q.trim())return;currentCat='all';let arr=products.filter(p=>p.name.includes(q.trim())||catName(p.cat).includes(q.trim()));openPage('products');document.getElementById('productsTitle').textContent='نتائج البحث';document.getElementById('productTabs').innerHTML='';document.getElementById('productsGrid').innerHTML=arr.length?arr.map(productCard).join(''):`<div class="empty" style="grid-column:1/-1"><div class="big">🔎</div><h2>لم نجد ما تبحث عنه</h2></div>`}
-function addCart(id){let x=cart.find(a=>a.id===id);if(x)x.qty++;else cart.push({id,qty:1});save();toast('تمت إضافة المنتج إلى السلة 🛒')} function changeQty(id,d){let x=cart.find(a=>a.id===id);if(!x)return;x.qty+=d;if(x.qty<=0)cart=cart.filter(a=>a.id!==id);save();renderCart()} function removeCart(id){cart=cart.filter(a=>a.id!==id);save();renderCart()} function toggleFav(id){fav.includes(id)?fav=fav.filter(x=>x!==id):fav.push(id);save();renderProducts();renderHome()}
-function renderCart(){let box=document.getElementById('cartContent');if(!cart.length){box.innerHTML=`<div class="empty"><div class="big">🛒</div><h2>السلة فارغة</h2><p>أضف بعض المنتجات الجميلة لتبدأ طلبك.</p><button class="primary" style="margin-top:18px" onclick="openPage('products')">تصفح المنتجات</button></div>`;return}let subtotal=cart.reduce((a,x)=>a+products.find(p=>p.id===x.id).price*x.qty,0),shipping=subtotal>=100000?0:5000,total=subtotal+shipping;box.innerHTML=cart.map(x=>{let p=products.find(p=>p.id===x.id);return `<div class="list-item"><div class="thumb">${p.icon}</div><div class="item-info"><h3>${p.name}</h3><strong class="price">${money(p.price)}</strong><div class="qty"><button onclick="changeQty(${p.id},-1)">−</button><b>${x.qty}</b><button onclick="changeQty(${p.id},1)">+</button><button class="remove" onclick="removeCart(${p.id})">حذف</button></div></div></div>`}).join('')+`<div class="total-box"><div class="row"><span>المجموع</span><b>${money(subtotal)}</b></div><div class="row"><span>التوصيل</span><b>${shipping?money(shipping):'مجاني'}</b></div><div class="row total"><span>الإجمالي</span><b>${money(total)}</b></div><button class="full" onclick="checkout()">إتمام الطلب</button></div>`}
-function openProduct(id){let p=products.find(x=>x.id===id);document.getElementById('detail').innerHTML=`<div class="detail-img">${p.image?`<img src="${p.image}" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:20px" onerror="this.style.display='none';this.parentElement.insertAdjacentText('beforeend',${JSON.stringify(p.icon)})">`:p.icon}</div><div class="rating">★ ${p.rating} / 5</div><h2>${p.name}</h2><p style="color:#777;line-height:1.8;margin:10px 0">منتج مختار من ZENHA بجودة ممتازة وسعر مميز.</p><div class="price" style="font-size:22px">${money(p.price)} <span class="old">${money(p.old)}</span></div><button class="full" onclick="addCart(${p.id});closeModal()">أضف إلى السلة</button>`;document.getElementById('productModal').classList.add('show')} function closeModal(){document.getElementById('productModal').classList.remove('show')}
-function checkout(){let name=localStorage.getItem('zenha_name')||'',phone=localStorage.getItem('zenha_phone')||'',address=localStorage.getItem('zenha_address')||'';if(!name||!phone||!address){toast('أكمل بيانات الحساب أولاً');openPage('account');return}let total=cart.reduce((a,x)=>a+products.find(p=>p.id===x.id).price*x.qty,0);if(total<100000)total+=5000;orders.unshift({id:Date.now(),date:new Date().toLocaleString('ar-SA'),total,status:'قيد التجهيز',items:cart});cart=[];save();toast('تم استلام طلبك بنجاح 🎉');openPage('account')}
-function saveAccount(){localStorage.setItem('zenha_name',document.getElementById('nameInput').value.trim());localStorage.setItem('zenha_phone',document.getElementById('phoneInput').value.trim());localStorage.setItem('zenha_address',document.getElementById('addressInput').value.trim());toast('تم حفظ بياناتك ✓')} function renderAccount(){document.getElementById('nameInput').value=localStorage.getItem('zenha_name')||'';document.getElementById('phoneInput').value=localStorage.getItem('zenha_phone')||'';document.getElementById('addressInput').value=localStorage.getItem('zenha_address')||'';let o=document.getElementById('orders');o.innerHTML=orders.length?orders.map(x=>`<div class="order">طلب #${String(x.id).slice(-6)}<br><small>${x.date}</small><br><strong>${money(x.total)}</strong> — ${x.status}</div>`).join(''):'<p style="color:#777;font-size:13px">لا توجد طلبات حتى الآن.</p>'} function clearData(){if(confirm('هل تريد مسح جميع بيانات التطبيق؟')){localStorage.clear();cart=[];fav=[];orders=[];save();location.reload()}}
+self.addEventListener("install", event => {
+  self.skipWaiting();
+});
 
-function openAdmin(){
- document.getElementById('adminCat').innerHTML=categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
- resetAdminForm();
- renderAdminProducts();
- openPage('admin');
-}
-function resetAdminForm(){
- adminEditingId=null;
- document.getElementById('adminFormTitle').textContent='➕ إضافة منتج جديد';
- ['adminName','adminPrice','adminOld'].forEach(id=>document.getElementById(id).value='');
- document.getElementById('adminRating').value='5';
- document.getElementById('adminImage').value='';
- document.getElementById('adminPreview').innerHTML='📷 اختر صورة من الهاتف';
- document.getElementById('adminCancel').style.display='none';
-}
-function previewAdminImage(e){
- let f=e.target.files&&e.target.files[0];
- if(!f)return;
- if(!f.type.startsWith('image/')){toast('اختر صورة فقط');e.target.value='';return}
- let r=new FileReader();
- r.onload=()=>document.getElementById('adminPreview').innerHTML=`<img src="${r.result}" alt="معاينة الصورة">`;
- r.readAsDataURL(f);
-}
-function saveAdminProduct(){
- let editing=adminEditingId;
- let name=document.getElementById('adminName').value.trim();
- let price=Number(document.getElementById('adminPrice').value);
- let old=Number(document.getElementById('adminOld').value)||price;
- let cat=document.getElementById('adminCat').value;
- let rating=Math.min(5,Math.max(0,Number(document.getElementById('adminRating').value)||5));
- if(!name||price<=0){toast('اكتب اسم المنتج والسعر بشكل صحيح');return}
- let file=document.getElementById('adminImage').files[0];
- let finish=image=>{
-  if(editing){
-   let p=products.find(x=>x.id===editing);
-   if(p){p.name=name;p.price=price;p.old=old;p.cat=cat;p.rating=rating;if(image)p.image=image;}
-  }else{
-   products.unshift({id:Date.now(),name,price,old,cat,rating,image:image||'',icon:'🛍️'});
-  }
-  saveProducts();renderHome();renderProducts();renderAdminProducts();
-  resetAdminForm();
-  toast(editing?'تم تعديل المنتج ✓':'تمت إضافة المنتج ✓');
- };
- if(file){let r=new FileReader();r.onload=()=>finish(r.result);r.readAsDataURL(file)}else finish('');
-}
-function editAdminProduct(id){
- let p=products.find(x=>x.id===id);if(!p)return;
- adminEditingId=id;
- document.getElementById('adminFormTitle').textContent='✏️ تعديل المنتج';
- document.getElementById('adminName').value=p.name;
- document.getElementById('adminPrice').value=p.price;
- document.getElementById('adminOld').value=p.old||'';
- document.getElementById('adminCat').value=p.cat;
- document.getElementById('adminRating').value=p.rating||5;
- document.getElementById('adminImage').value='';
- document.getElementById('adminPreview').innerHTML=p.image?`<img src="${p.image}" alt="صورة المنتج">`:'📷 لا توجد صورة';
- document.getElementById('adminCancel').style.display='block';
- window.scrollTo({top:0,behavior:'smooth'});
-}
-function deleteAdminProduct(id){
- if(!confirm('هل تريد حذف هذا المنتج نهائياً؟'))return;
- products=products.filter(p=>p.id!==id);
- cart=cart.filter(x=>products.some(p=>p.id===x.id));
- fav=fav.filter(x=>products.some(p=>p.id===x));
- saveProducts();save();renderHome();renderProducts();renderAdminProducts();toast('تم حذف المنتج ✓');
-}
-function renderAdminProducts(){
- let box=document.getElementById('adminProducts');if(!box)return;
- document.getElementById('adminCount').textContent=products.length+' منتج';
- box.innerHTML=products.length?products.map(p=>`<div class="admin-product"><div class="mini">${p.image?`<img src="${p.image}" alt="">`:p.icon||'🛍️'}</div><div style="flex:1"><b style="font-size:13px">${p.name}</b><div style="color:var(--primary);font-size:12px;margin-top:4px">${money(p.price)}</div><div style="color:#888;font-size:11px;margin-top:3px">${catName(p.cat)} · ⭐ ${p.rating||5}</div></div><div class="admin-actions"><button class="qty" style="background:#f0effa;padding:0 8px;border-radius:8px" onclick="editAdminProduct(${p.id})">✏️</button><button class="qty danger" style="padding:0 8px;border-radius:8px" onclick="deleteAdminProduct(${p.id})">🗑️</button></div></div>`).join(''):'<div class="empty"><div class="big">📦</div><h2>لا توجد منتجات</h2><p>أضف أول منتج لمتجرك من النموذج أعلاه.</p></div>';
-}
+self.addEventListener("activate", event => {
+  event.waitUntil(self.clients.claim());
+});
 
-renderHome();updateBadge();
-</script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').then(()=>console.log('Service Worker تم تشغيله')).catch(error=>console.log('خطأ Service Worker:',error))})}</script>
-<script>setTimeout(()=>{document.getElementById("splash").style.display="none"},1500)</script>
-</body></html>
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request).then(fetchResponse => {
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, fetchResponse.clone());
+          return fetchResponse;
+        });
+      });
+    }).catch(() => {
+      return caches.match("/ZENHA/index.html");
+    })
+  );
+});
