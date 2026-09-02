@@ -39,7 +39,7 @@ header{position:sticky;top:0;z-index:20;background:#fff;height:66px;display:flex
 .total-box{background:#fff;border-radius:20px;padding:16px;margin-top:15px;box-shadow:var(--shadow)}.row{display:flex;justify-content:space-between;margin-bottom:11px;font-size:14px}.row.total{font-weight:900;font-size:18px;border-top:1px solid var(--border);padding-top:13px}.full{width:100%;padding:14px;border-radius:13px;background:var(--primary);color:#fff;font-weight:bold;margin-top:5px}
 .form{background:#fff;border-radius:20px;padding:17px;box-shadow:var(--shadow);margin-bottom:14px}.form h3{margin-bottom:14px}.field{margin-bottom:12px}.field label{display:block;font-size:12px;margin-bottom:6px;color:#666}.field input,.field select,.field textarea{width:100%;border:1px solid var(--border);border-radius:12px;padding:12px;outline:0;background:#fafafd}.field textarea{min-height:85px;resize:none}
 .modal{position:fixed;inset:0;background:#0007;z-index:50;display:none;align-items:flex-end}.modal.show{display:flex}.sheet{background:#fff;width:100%;max-width:700px;margin:auto;border-radius:25px 25px 0 0;padding:20px;max-height:90vh;overflow:auto}.close{float:left;background:#eee;border-radius:50%;width:35px;height:35px}.detail-img{height:240px;background:#f1f0f8;border-radius:20px;display:grid;place-items:center;font-size:100px;margin:12px 0}.toast{position:fixed;z-index:100;bottom:88px;left:50%;transform:translateX(-50%) translateY(20px);background:#222;color:#fff;padding:11px 18px;border-radius:12px;font-size:13px;opacity:0;transition:.25s;pointer-events:none}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.admin-actions{display:flex;gap:8px}.admin-actions button{flex:1}.admin-product{display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:10px;margin-bottom:9px;box-shadow:var(--shadow)}.admin-product .thumb{width:58px;height:58px}.admin-product .info{flex:1}.admin-product .info h4{font-size:13px;margin-bottom:4px}.admin-product .mini{font-size:11px;color:#777}.admin-product button{padding:7px 10px;border-radius:9px;background:#eee;font-size:11px}.admin-product .del{color:#e74c3c}.admin-note{background:#f1f0fa;border-radius:14px;padding:12px;font-size:12px;color:#555;line-height:1.7;margin-bottom:14px}.admin-count{font-size:12px;color:#777;margin-bottom:10px}.tabs{display:flex;gap:8px;overflow:auto;margin-bottom:15px}.tab{background:#fff;border:1px solid var(--border);padding:9px 14px;border-radius:20px;white-space:nowrap;font-size:12px}.tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.tabs{display:flex;gap:8px;overflow:auto;margin-bottom:15px}.tab{background:#fff;border:1px solid var(--border);padding:9px 14px;border-radius:20px;white-space:nowrap;font-size:12px}.tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 .order{background:#fff;padding:15px;border-radius:18px;margin-bottom:10px;box-shadow:var(--shadow)}.order strong{color:var(--primary)}
 @media(min-width:701px){.bottom{left:50%;right:auto;width:700px;transform:translateX(-50%)}.modal{align-items:center}.sheet{border-radius:25px}}
 #splash{position:fixed;inset:0;background:#5b4bdb;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white}
@@ -54,47 +54,20 @@ header{position:sticky;top:0;z-index:20;background:#fff;height:66px;display:flex
 <main>
 <section id="home" class="page active">
 <div class="hero"><small>✨ أهلاً بك في ZENHA</small><h1>تسوّق أذكى، عِش أفضل</h1><p>اكتشف منتجات مختارة بأسعار رائعة وتجربة شراء سهلة.</p><button class="primary" onclick="openPage('products')">ابدأ التسوق ←</button></div>
-<button class="full" style="margin:4px 0 18px;background:#eee;color:#333" onclick="openAdmin()">⚙️ إدارة المتجر</button><div class="section-head"><h2>الأقسام</h2><button class="link" onclick="openPage('categories')">عرض الكل</button></div><div class="cat-scroll" id="homeCats"></div>
+<div class="section-head"><h2>الأقسام</h2><button class="link" onclick="openPage('categories')">عرض الكل</button></div><div class="cat-scroll" id="homeCats"></div>
 <div class="section-head"><h2>🔥 الأكثر مبيعاً</h2><button class="link" onclick="openPage('products')">عرض الكل</button></div><div class="grid" id="homeProducts"></div>
 </section>
 <section id="categories" class="page"><div class="section-head"><h2>أقسام ZENHA</h2></div><p style="color:#777;font-size:13px;margin-bottom:16px">اختر القسم الذي تريد استكشافه</p><div class="grid" id="categoryGrid"></div></section>
 <section id="products" class="page"><div class="section-head"><h2 id="productsTitle">كل المنتجات</h2></div><div class="tabs" id="productTabs"></div><div class="grid" id="productsGrid"></div></section>
 <section id="cart" class="page"><div class="section-head"><h2>سلة المشتريات</h2></div><div id="cartContent"></div></section>
-<section id="account" class="page"><div class="section-head"><h2>حسابي</h2></div><div class="form"><h3>👤 بيانات الحساب</h3><div class="field"><label>الاسم</label><input id="nameInput" placeholder="اكتب اسمك"></div><div class="field"><label>رقم الجوال</label><input id="phoneInput" type="tel" placeholder="05xxxxxxxx"></div><div class="field"><label>العنوان</label><textarea id="addressInput" placeholder="عنوان التوصيل"></textarea></div><button class="full" onclick="saveAccount()">حفظ البيانات</button></div><div class="form"><h3>📦 طلباتي</h3><div id="orders"></div></div><button class="full" style="margin-top:12px" onclick="openAdmin()">⚙️ فتح لوحة إدارة المنتجات</button><button class="full" style="background:#eee;color:#333" onclick="clearData()">مسح بيانات التطبيق</button></section>
-
-<section id="admin" class="page">
-  <div class="section-head">
-    <h2>⚙️ إدارة المتجر</h2>
-    <button class="link" onclick="openPage('home')">الرئيسية</button>
-  </div>
-  <div class="admin-note">من هنا يمكنك إضافة منتجات جديدة أو تعديل وحذف المنتجات الموجودة. المنتجات التي تضيفها تُحفظ على هذا الجهاز.</div>
-  <div class="form">
-    <h3 id="adminFormTitle">➕ إضافة منتج جديد</h3>
-    <div class="field"><label>اسم المنتج</label><input id="adminName" placeholder="مثال: سماعة لاسلكية"></div>
-    <div class="field"><label>السعر</label><input id="adminPrice" type="number" placeholder="مثال: 39000"></div>
-    <div class="field"><label>السعر القديم</label><input id="adminOld" type="number" placeholder="مثال: 45000"></div>
-    <div class="field"><label>القسم</label><select id="adminCat"></select></div>
-    <div class="field"><label>التقييم</label><input id="adminRating" type="number" min="0" max="5" step="0.1" value="5"></div>
-    <div class="field"><label>صورة المنتج من الهاتف</label><input id="adminImage" type="file" accept="image/*" onchange="previewAdminImage(event)"></div>
-    <div id="adminPreview" style="display:none;height:150px;background:#f1f0f8;border-radius:15px;margin-bottom:12px;overflow:hidden;text-align:center"></div>
-    <div class="admin-actions">
-      <button class="full" id="adminSaveBtn" onclick="saveProduct()">💾 حفظ المنتج</button>
-      <button class="full" id="adminCancelBtn" style="display:none;background:#eee;color:#333" onclick="resetAdminForm()">إلغاء التعديل</button>
-    </div>
-  </div>
-  <div class="form">
-    <h3>📦 المنتجات الحالية</h3>
-    <div class="admin-count" id="adminCount"></div>
-    <div id="adminProducts"></div>
-  </div>
-</section>
+<section id="account" class="page"><div class="section-head"><h2>حسابي</h2></div><div class="form"><h3>👤 بيانات الحساب</h3><div class="field"><label>الاسم</label><input id="nameInput" placeholder="اكتب اسمك"></div><div class="field"><label>رقم الجوال</label><input id="phoneInput" type="tel" placeholder="05xxxxxxxx"></div><div class="field"><label>العنوان</label><textarea id="addressInput" placeholder="عنوان التوصيل"></textarea></div><button class="full" onclick="saveAccount()">حفظ البيانات</button></div><div class="form"><h3>📦 طلباتي</h3><div id="orders"></div></div><button class="full" style="background:#eee;color:#333" onclick="clearData()">مسح بيانات التطبيق</button></section>
 </main>
 <nav class="bottom"><button class="nav active" data-page="home" onclick="openPage('home')"><b>🏠</b>الرئيسية</button><button class="nav" data-page="categories" onclick="openPage('categories')"><b>▦</b>الأقسام</button><button class="nav" data-page="cart" onclick="openPage('cart')"><b>🛒</b>السلة</button><button class="nav" data-page="account" onclick="openPage('account')"><b>👤</b>حسابي</button></nav>
 </div>
 <div id="productModal" class="modal" onclick="if(event.target===this)closeModal()"><div class="sheet"><button class="close" onclick="closeModal()">×</button><div id="detail"></div></div></div><div id="toast" class="toast"></div>
 <script>
 const categories=[{id:'clothes',name:'ملابس',icon:'👕',desc:'أحدث الملابس'},{id:'electronics',name:'إلكترونيات',icon:'📱',desc:'أجهزة وإكسسوارات'},{id:'beauty',name:'جمال وعناية',icon:'💄',desc:'منتجات الجمال والعناية'},{id:'home',name:'المنزل',icon:'🏠',desc:'كل ما تحتاجه للمنزل'},{id:'accessories',name:'إكسسوارات',icon:'⌚',desc:'إكسسوارات مميزة'},{id:'offers',name:'العروض',icon:'🎁',desc:'أفضل عروض ZENHA'}];
-const defaultProducts=[
+const products=[
 {id:1,name:'سماعات لاسلكية Pro',cat:'electronics',price:39000,old:45000,image:'images/clip1774673163412.png',icon:'🎧',rating:4.8},
 {id:2,name:'ساعة ذكية Ultra',cat:'electronics',price:75000,old:85000,icon:'⌚',rating:4.7},
 {id:3,name:'تيشيرت قطني فاخر',cat:'clothes',price:28000,old:35000,icon:'👕',rating:4.6},
@@ -109,112 +82,10 @@ const defaultProducts=[
 {id:12,name:'نظارة شمسية',cat:'accessories',price:30000,old:38000,icon:'🕶️',rating:4.7}];
 let cart=JSON.parse(localStorage.getItem('zenha_cart')||'[]'),fav=JSON.parse(localStorage.getItem('zenha_fav')||'[]'),orders=JSON.parse(localStorage.getItem('zenha_orders')||'[]'),currentCat='all';
 function money(n){return n.toLocaleString('ar-SA')+' ل.س'} function save(){localStorage.setItem('zenha_cart',JSON.stringify(cart));localStorage.setItem('zenha_fav',JSON.stringify(fav));localStorage.setItem('zenha_orders',JSON.stringify(orders));updateBadge()} function toast(t){let x=document.getElementById('toast');x.textContent=t;x.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>x.classList.remove('show'),1800)} function updateBadge(){document.getElementById('cartBadge').textContent=cart.reduce((a,x)=>a+x.qty,0)}
-function openPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.page===id));if(id==='categories')renderCategories();if(id==='products')renderProducts();if(id==='cart')renderCart();if(id==='account')renderAccount();if(id==='admin'){fillAdminCategories();renderAdminProducts()}window.scrollTo(0,0)}
+function openPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.page===id));if(id==='categories')renderCategories();if(id==='products')renderProducts();if(id==='cart')renderCart();if(id==='account')renderAccount();window.scrollTo(0,0)}
 function catName(id){let c=categories.find(x=>x.id===id);return c?c.name:'كل المنتجات'}
 function productCard(p){let liked=fav.includes(p.id);return `<article class="product" onclick="openProduct(${p.id})"><button class="heart" onclick="event.stopPropagation();toggleFav(${p.id})">${liked?'❤️':'♡'}</button><div class="product-img">${p.image?`<img src="${p.image}" alt="" onerror="this.style.display='none';this.parentElement.insertAdjacentText('beforeend',${JSON.stringify(p.icon)})">`:p.icon}</div><div class="rating">★ ${p.rating}</div><h3>${p.name}</h3><div class="price">${money(p.price)} <span class="old">${money(p.old)}</span></div><button class="add" onclick="event.stopPropagation();addCart(${p.id})">أضف للسلة</button></article>`}
-function renderCatsHome(){document.getElementById('homeCats').innerHTML=categories.map(c=>`<button class="cat" onclick="filterCat('${c.id}')"><div class="cat-icon">${c.icon}</div><span>${c.name}</span></button>`).join('')} 
-let editingProductId=null, adminImageData='';
-
-function saveProducts(){localStorage.setItem('zenha_products',JSON.stringify(products));}
-
-function openAdmin(){
-  fillAdminCategories();
-  resetAdminForm();
-  renderAdminProducts();
-  openPage('admin');
-}
-
-function fillAdminCategories(){
-  const s=document.getElementById('adminCat');
-  if(s) s.innerHTML=categories.filter(c=>c.id!=='offers').map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
-}
-
-function previewAdminImage(e){
-  const file=e.target.files&&e.target.files[0];
-  const box=document.getElementById('adminPreview');
-  if(!file){adminImageData='';box.style.display='none';box.innerHTML='';return}
-  const reader=new FileReader();
-  reader.onload=function(){
-    adminImageData=reader.result;
-    box.style.display='block';
-    box.innerHTML=`<img src="${adminImageData}" style="width:100%;height:100%;object-fit:contain">`;
-  };
-  reader.readAsDataURL(file);
-}
-
-function resetAdminForm(){
-  editingProductId=null;
-  adminImageData='';
-  document.getElementById('adminFormTitle').textContent='➕ إضافة منتج جديد';
-  document.getElementById('adminSaveBtn').textContent='💾 حفظ المنتج';
-  document.getElementById('adminCancelBtn').style.display='none';
-  document.getElementById('adminName').value='';
-  document.getElementById('adminPrice').value='';
-  document.getElementById('adminOld').value='';
-  document.getElementById('adminRating').value='5';
-  document.getElementById('adminImage').value='';
-  const box=document.getElementById('adminPreview');
-  box.style.display='none'; box.innerHTML='';
-}
-
-function saveProduct(){
-  const name=document.getElementById('adminName').value.trim();
-  const price=Number(document.getElementById('adminPrice').value);
-  const old=Number(document.getElementById('adminOld').value)||price;
-  const cat=document.getElementById('adminCat').value;
-  const rating=Number(document.getElementById('adminRating').value)||5;
-  if(!name||!price){toast('اكتب اسم المنتج والسعر أولاً');return}
-  if(editingProductId!==null){
-    const p=products.find(x=>x.id===editingProductId);
-    if(!p)return;
-    p.name=name;p.price=price;p.old=old;p.cat=cat;p.rating=Math.min(5,Math.max(0,rating));
-    if(adminImageData)p.image=adminImageData;
-    saveProducts();resetAdminForm();renderAdminProducts();renderHome();renderProducts();toast('تم تعديل المنتج ✓');
-  }else{
-    products.unshift({id:Date.now(),name,cat,price,old,rating:Math.min(5,Math.max(0,rating)),image:adminImageData||'',icon:'🛍️'});
-    saveProducts();resetAdminForm();renderAdminProducts();renderHome();renderProducts();toast('تمت إضافة المنتج ✓');
-  }
-}
-
-function editProduct(id){
-  const p=products.find(x=>x.id===id);if(!p)return;
-  editingProductId=id;
-  document.getElementById('adminFormTitle').textContent='✏️ تعديل المنتج';
-  document.getElementById('adminSaveBtn').textContent='💾 حفظ التعديل';
-  document.getElementById('adminCancelBtn').style.display='block';
-  document.getElementById('adminName').value=p.name;
-  document.getElementById('adminPrice').value=p.price;
-  document.getElementById('adminOld').value=p.old||'';
-  document.getElementById('adminCat').value=p.cat;
-  document.getElementById('adminRating').value=p.rating||5;
-  adminImageData=p.image||'';
-  const box=document.getElementById('adminPreview');
-  if(adminImageData){box.style.display='block';box.innerHTML=`<img src="${adminImageData}" style="width:100%;height:100%;object-fit:contain">`}
-  else {box.style.display='none';box.innerHTML=''}
-  window.scrollTo(0,0);
-}
-
-function deleteProduct(id){
-  if(!confirm('هل تريد حذف هذا المنتج؟'))return;
-  products=products.filter(x=>x.id!==id);
-  saveProducts();renderAdminProducts();renderHome();renderProducts();toast('تم حذف المنتج');
-}
-
-function renderAdminProducts(){
-  const box=document.getElementById('adminProducts');
-  const count=document.getElementById('adminCount');
-  if(!box)return;
-  count.textContent=`عدد المنتجات: ${products.length}`;
-  box.innerHTML=products.length?products.map(p=>`
-    <div class="admin-product">
-      <div class="thumb">${p.image?`<img src="${p.image}" style="width:100%;height:100%;object-fit:contain;border-radius:14px">`:p.icon||'🛍️'}</div>
-      <div class="info"><h4>${p.name}</h4><div class="mini">${money(p.price)} • ${catName(p.cat)}</div></div>
-      <button onclick="editProduct(${p.id})">✏️ تعديل</button>
-      <button class="del" onclick="deleteProduct(${p.id})">🗑️ حذف</button>
-    </div>`).join(''):'<p style="color:#777;font-size:13px">لا توجد منتجات.</p>';
-}
-
-function renderHome(){document.getElementById('homeProducts').innerHTML=products.slice(0,4).map(productCard).join('');renderCatsHome()} function renderCategories(){document.getElementById('categoryGrid').innerHTML=categories.map(c=>`<button class="category-card" onclick="filterCat('${c.id}')"><div class="cat-icon">${c.icon}</div><h3>${c.name}</h3><p>${c.desc}</p></button>`).join('')} function filterCat(id){currentCat=id;openPage('products')}
+function renderCatsHome(){document.getElementById('homeCats').innerHTML=categories.map(c=>`<button class="cat" onclick="filterCat('${c.id}')"><div class="cat-icon">${c.icon}</div><span>${c.name}</span></button>`).join('')} function renderHome(){document.getElementById('homeProducts').innerHTML=products.slice(0,4).map(productCard).join('');renderCatsHome()} function renderCategories(){document.getElementById('categoryGrid').innerHTML=categories.map(c=>`<button class="category-card" onclick="filterCat('${c.id}')"><div class="cat-icon">${c.icon}</div><h3>${c.name}</h3><p>${c.desc}</p></button>`).join('')} function filterCat(id){currentCat=id;openPage('products')}
 function renderProducts(){let tabs=[{id:'all',name:'الكل'},...categories];document.getElementById('productTabs').innerHTML=tabs.map(t=>`<button class="tab ${currentCat===t.id?'active':''}" onclick="currentCat='${t.id}';renderProducts()">${t.name}</button>`).join('');let arr=currentCat==='all'?products:products.filter(p=>p.cat===currentCat);document.getElementById('productsTitle').textContent=currentCat==='all'?'كل المنتجات':catName(currentCat);document.getElementById('productsGrid').innerHTML=arr.length?arr.map(productCard).join(''):`<div class="empty" style="grid-column:1/-1"><div class="big">🔎</div><h2>لا توجد منتجات</h2></div>`}
 function searchProducts(q){if(!q.trim())return;currentCat='all';let arr=products.filter(p=>p.name.includes(q.trim())||catName(p.cat).includes(q.trim()));openPage('products');document.getElementById('productsTitle').textContent='نتائج البحث';document.getElementById('productTabs').innerHTML='';document.getElementById('productsGrid').innerHTML=arr.length?arr.map(productCard).join(''):`<div class="empty" style="grid-column:1/-1"><div class="big">🔎</div><h2>لم نجد ما تبحث عنه</h2></div>`}
 function addCart(id){let x=cart.find(a=>a.id===id);if(x)x.qty++;else cart.push({id,qty:1});save();toast('تمت إضافة المنتج إلى السلة 🛒')} function changeQty(id,d){let x=cart.find(a=>a.id===id);if(!x)return;x.qty+=d;if(x.qty<=0)cart=cart.filter(a=>a.id!==id);save();renderCart()} function removeCart(id){cart=cart.filter(a=>a.id!==id);save();renderCart()} function toggleFav(id){fav.includes(id)?fav=fav.filter(x=>x!==id):fav.push(id);save();renderProducts();renderHome()}
