@@ -5,74 +5,1028 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#5b4bdb">
 <title>ZENHA — لوحة الإدارة</title>
+
 <style>
-:root{--p:#5b4bdb;--p2:#806ff0;--bg:#f6f6fa;--card:#fff;--text:#17171a;--muted:#777;--border:#ececf2;--danger:#e74c3c}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,Tahoma,sans-serif;background:var(--bg);color:var(--text)}
-.wrap{max-width:900px;margin:auto;padding:22px}.head{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border-radius:24px;padding:24px;margin-bottom:18px}
-.head h1{margin:0 0 8px}.head p{margin:0;opacity:.9}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.card{background:#fff;border-radius:20px;padding:18px;box-shadow:0 5px 22px #19144612;margin-bottom:15px}
-.field{margin-bottom:12px}.field label{display:block;font-size:12px;color:#666;margin-bottom:6px}.field input,.field select{width:100%;padding:12px;border:1px solid var(--border);border-radius:12px}
-button{border:0;border-radius:12px;padding:12px 15px;font-weight:bold;cursor:pointer}.primary{background:var(--p);color:#fff}.muted{background:#eee;color:#333}.danger{background:#fee;color:var(--danger)}
-.actions{display:flex;gap:8px}.actions button{flex:1}.product{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:15px;padding:10px;margin:8px 0}.thumb{width:65px;height:65px;border-radius:12px;background:#f1f0f8;display:grid;place-items:center;font-size:28px;overflow:hidden}.thumb img{width:100%;height:100%;object-fit:contain}.info{flex:1}.info h3{font-size:14px;margin:0 0 5px}.info small{color:var(--muted)}.badge{display:inline-block;background:#eee;padding:5px 9px;border-radius:20px;font-size:11px;margin-top:8px}
-@media(max-width:650px){.grid{grid-template-columns:1fr}.wrap{padding:14px}}
+:root{
+  --p:#5b4bdb;
+  --p2:#806ff0;
+  --bg:#f6f6fa;
+  --card:#fff;
+  --text:#17171a;
+  --muted:#777;
+  --border:#ececf2;
+  --danger:#e74c3c;
+  --success:#20a464;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,Tahoma,sans-serif;
+  background:var(--bg);
+  color:var(--text)
+}
+
+.wrap{
+  max-width:900px;
+  margin:auto;
+  padding:22px
+}
+
+.head{
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  color:#fff;
+  border-radius:24px;
+  padding:24px;
+  margin-bottom:18px
+}
+
+.head h1{
+  margin:0 0 8px
+}
+
+.head p{
+  margin:0;
+  opacity:.9
+}
+
+.status{
+  margin-top:15px;
+  background:#ffffff22;
+  border-radius:12px;
+  padding:10px 14px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px
+}
+
+.card{
+  background:#fff;
+  border-radius:20px;
+  padding:18px;
+  box-shadow:0 5px 22px #19144612;
+  margin-bottom:15px
+}
+
+.field{
+  margin-bottom:12px
+}
+
+.field label{
+  display:block;
+  font-size:12px;
+  color:#666;
+  margin-bottom:6px
+}
+
+.field input,
+.field select{
+  width:100%;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  font-size:14px
+}
+
+button{
+  border:0;
+  border-radius:12px;
+  padding:12px 15px;
+  font-weight:bold;
+  cursor:pointer
+}
+
+.primary{
+  background:var(--p);
+  color:#fff
+}
+
+.muted{
+  background:#eee;
+  color:#333
+}
+
+.danger{
+  background:#fee;
+  color:var(--danger)
+}
+
+.actions{
+  display:flex;
+  gap:8px
+}
+
+.actions button{
+  flex:1
+}
+
+.product{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:10px;
+  margin:8px 0
+}
+
+.thumb{
+  width:65px;
+  height:65px;
+  border-radius:12px;
+  background:#f1f0f8;
+  display:grid;
+  place-items:center;
+  font-size:28px;
+  overflow:hidden;
+  flex-shrink:0
+}
+
+.thumb img{
+  width:100%;
+  height:100%;
+  object-fit:contain
+}
+
+.info{
+  flex:1
+}
+
+.info h3{
+  font-size:14px;
+  margin:0 0 5px
+}
+
+.info small{
+  color:var(--muted)
+}
+
+.badge{
+  display:inline-block;
+  background:#eee;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:11px;
+  margin-top:8px
+}
+
+.message{
+  display:none;
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:12px;
+  font-weight:bold;
+  font-size:14px
+}
+
+.message.success{
+  display:block;
+  background:#e9f9f0;
+  color:#16834f
+}
+
+.message.error{
+  display:block;
+  background:#fff0ef;
+  color:#c0392b
+}
+
+.loading{
+  text-align:center;
+  padding:20px;
+  color:#777
+}
+
+@media(max-width:650px){
+  .grid{
+    grid-template-columns:1fr
+  }
+
+  .wrap{
+    padding:14px
+  }
+}
 </style>
 </head>
+
 <body>
+
 <div class="wrap">
+
   <div class="head">
+
     <h1>⚙️ لوحة إدارة ZENHA</h1>
+
     <p>هذه اللوحة منفصلة عن تطبيق الزبون.</p>
+
+    <div id="connectionStatus" class="status">
+      🔄 جاري الاتصال بقاعدة البيانات...
+    </div>
+
   </div>
+
+  <div id="message" class="message"></div>
+
   <div class="grid">
+
     <div class="card">
+
       <h2 id="formTitle">➕ إضافة منتج</h2>
-      <div class="field"><label>اسم المنتج</label><input id="name" placeholder="اسم المنتج"></div>
-      <div class="field"><label>السعر</label><input id="price" type="number" placeholder="السعر"></div>
-      <div class="field"><label>السعر القديم</label><input id="old" type="number" placeholder="السعر القديم"></div>
-      <div class="field"><label>القسم</label><select id="cat"></select></div>
-      <div class="field"><label>التقييم</label><input id="rating" type="number" min="0" max="5" step=".1" value="5"></div>
-      <div class="field"><label>صورة المنتج</label><input id="image" type="file" accept="image/*"></div>
-      <div id="preview" style="display:none;height:160px;background:#f1f0f8;border-radius:15px;margin-bottom:12px;overflow:hidden"></div>
-      <div class="actions"><button class="primary" onclick="saveProduct()">💾 حفظ</button><button class="muted" onclick="resetForm()">إلغاء</button></div>
+
+      <div class="field">
+        <label>اسم المنتج</label>
+        <input id="name" placeholder="اسم المنتج">
+      </div>
+
+      <div class="field">
+        <label>السعر</label>
+        <input id="price" type="number" placeholder="السعر">
+      </div>
+
+      <div class="field">
+        <label>السعر القديم</label>
+        <input id="old" type="number" placeholder="السعر القديم">
+      </div>
+
+      <div class="field">
+        <label>القسم</label>
+        <select id="cat"></select>
+      </div>
+
+      <div class="field">
+        <label>التقييم</label>
+        <input
+          id="rating"
+          type="number"
+          min="0"
+          max="5"
+          step=".1"
+          value="5"
+        >
+      </div>
+
+      <div class="field">
+        <label>صورة المنتج</label>
+        <input id="image" type="file" accept="image/*">
+      </div>
+
+      <div
+        id="preview"
+        style="
+          display:none;
+          height:160px;
+          background:#f1f0f8;
+          border-radius:15px;
+          margin-bottom:12px;
+          overflow:hidden
+        ">
+      </div>
+
+      <div class="actions">
+
+        <button
+          id="saveBtn"
+          class="primary"
+          onclick="saveProduct()">
+          💾 حفظ
+        </button>
+
+        <button
+          class="muted"
+          onclick="resetForm()">
+          إلغاء
+        </button>
+
+      </div>
+
     </div>
+
     <div class="card">
+
       <h2>📦 المنتجات</h2>
-      <div id="count" class="badge"></div>
-      <div id="list"></div>
+
+      <div id="count" class="badge">
+        عدد المنتجات: 0
+      </div>
+
+      <div id="list">
+        <div class="loading">
+          🔄 جاري تحميل المنتجات...
+        </div>
+      </div>
+
     </div>
+
   </div>
+
 </div>
+
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+
 <script>
-const categories=[
-{id:'clothes',name:'ملابس'},{id:'electronics',name:'إلكترونيات'},
-{id:'beauty',name:'جمال وعناية'},{id:'home',name:'المنزل'},
-{id:'accessories',name:'إكسسوارات'}
-];
-const defaults=[
-{id:1,name:'سماعات لاسلكية Pro',cat:'electronics',price:39000,old:45000,image:'',icon:'🎧',rating:4.8},
-{id:2,name:'ساعة ذكية Ultra',cat:'electronics',price:75000,old:85000,image:'',icon:'⌚',rating:4.7}
-];
-let products=JSON.parse(localStorage.getItem('zenha_products')||'null')||defaults;
-let editing=null,imageData='';
-cat.innerHTML=categories.map(c=>'<option value="'+c.id+'">'+c.name+'</option>').join('');
-image.onchange=e=>{
- const f=e.target.files[0]; if(!f)return;
- const r=new FileReader();r.onload=()=>{imageData=r.result;preview.style.display='block';preview.innerHTML='<img src="'+imageData+'" style="width:100%;height:100%;object-fit:contain">'};r.readAsDataURL(f)
+
+/* =========================
+   Firebase
+========================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBJHuI52g0uEpNb5VCCCT9GvBKO6ZY2U2",
+  authDomain: "zenha-6b9c7.firebaseapp.com",
+  projectId: "zenha-6b9c7",
+  storageBucket: "zenha-6b9c7.firebasestorage.app",
+  messagingSenderId: "822749564920",
+  appId: "1:822749564920:web:7cd17e460565f3f675d00d",
+  measurementId: "G-JQHTDND43V"
 };
-function money(n){return Number(n).toLocaleString('ar-SA')+' ل.س'}
-function persist(){localStorage.setItem('zenha_products',JSON.stringify(products))}
-function resetForm(){editing=null;imageData='';formTitle.textContent='➕ إضافة منتج';name.value='';price.value='';old.value='';rating.value='5';image.value='';preview.style.display='none';preview.innerHTML=''}
-function saveProduct(){
- if(!name.value.trim()||!price.value){alert('اكتب اسم المنتج والسعر');return}
- if(editing!==null){
-   const p=products.find(x=>x.id===editing);p.name=name.value.trim();p.price=+price.value;p.old=+old.value||p.price;p.cat=cat.value;p.rating=+rating.value||5;if(imageData)p.image=imageData;
- }else products.unshift({id:Date.now(),name:name.value.trim(),price:+price.value,old:+old.value||+price.value,cat:cat.value,rating:+rating.value||5,image:imageData,icon:'🛍️'});
- persist();resetForm();render()
+
+let db;
+
+try {
+
+  firebase.initializeApp(firebaseConfig);
+
+  db = firebase.firestore();
+
+  console.log("Firebase initialized");
+
+} catch(error) {
+
+  console.error(error);
+
+  showConnection(
+    "❌ فشل تشغيل Firebase",
+    false
+  );
+
 }
-function edit(id){const p=products.find(x=>x.id===id);editing=id;formTitle.textContent='✏️ تعديل منتج';name.value=p.name;price.value=p.price;old.value=p.old;cat.value=p.cat;rating.value=p.rating||5;imageData=p.image||'';if(imageData){preview.style.display='block';preview.innerHTML='<img src="'+imageData+'" style="width:100%;height:100%;object-fit:contain">'}window.scrollTo(0,0)}
-function del(id){if(!confirm('حذف المنتج؟'))return;products=products.filter(p=>p.id!==id);persist();render()}
-function render(){count.textContent='عدد المنتجات: '+products.length;list.innerHTML=products.map(p=>'<div class="product"><div class="thumb">'+(p.image?'<img src="'+p.image+'">':p.icon)+'</div><div class="info"><h3>'+p.name+'</h3><small>'+money(p.price)+'</small></div><button class="muted" onclick="edit('+p.id+')">✏️</button><button class="danger" onclick="del('+p.id+')">🗑️</button></div>').join('')}
-render();
+
+
+/* =========================
+   Categories
+========================= */
+
+const categories = [
+  {id:'clothes',name:'ملابس'},
+  {id:'electronics',name:'إلكترونيات'},
+  {id:'beauty',name:'جمال وعناية'},
+  {id:'home',name:'المنزل'},
+  {id:'accessories',name:'إكسسوارات'}
+];
+
+const cat = document.getElementById('cat');
+
+cat.innerHTML = categories
+  .map(c =>
+    '<option value="'+c.id+'">'+c.name+'</option>'
+  )
+  .join('');
+
+
+/* =========================
+   Variables
+========================= */
+
+let products = [];
+let editing = null;
+let imageData = '';
+
+const nameInput = document.getElementById('name');
+const priceInput = document.getElementById('price');
+const oldInput = document.getElementById('old');
+const ratingInput = document.getElementById('rating');
+const imageInput = document.getElementById('image');
+const preview = document.getElementById('preview');
+const list = document.getElementById('list');
+const count = document.getElementById('count');
+const formTitle = document.getElementById('formTitle');
+const message = document.getElementById('message');
+const connectionStatus = document.getElementById('connectionStatus');
+const saveBtn = document.getElementById('saveBtn');
+
+
+/* =========================
+   Connection Test
+========================= */
+
+function showConnection(text, success){
+
+  connectionStatus.textContent = text;
+
+  if(success){
+
+    connectionStatus.style.background = '#20a464';
+
+  }else{
+
+    connectionStatus.style.background = '#c0392b';
+
+  }
+}
+
+
+/*
+   هذا الاختبار يتأكد أن Firestore
+   فعلاً قابل للقراءة
+*/
+
+if(db){
+
+  db.collection('products')
+    .limit(1)
+    .get()
+    .then(() => {
+
+      showConnection(
+        '🟢 تم الاتصال بقاعدة البيانات',
+        true
+      );
+
+    })
+    .catch(error => {
+
+      console.error(
+        'Firestore connection error:',
+        error
+      );
+
+      showConnection(
+        '🔴 فشل الاتصال بقاعدة البيانات',
+        false
+      );
+
+      showMessage(
+        '❌ خطأ Firebase: ' + error.message,
+        false
+      );
+
+    });
+
+}
+
+
+/* =========================
+   Image
+========================= */
+
+imageInput.addEventListener('change', function(e){
+
+  const file = e.target.files[0];
+
+  if(!file) return;
+
+  if(file.size > 5 * 1024 * 1024){
+
+    showMessage(
+      '❌ حجم الصورة كبير. اختر صورة أقل من 5MB.',
+      false
+    );
+
+    imageInput.value = '';
+
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(){
+
+    imageData = reader.result;
+
+    preview.style.display = 'block';
+
+    preview.innerHTML =
+      '<img src="' +
+      imageData +
+      '" style="width:100%;height:100%;object-fit:contain">';
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
+
+
+/* =========================
+   Save Product
+========================= */
+
+async function saveProduct(){
+
+  try{
+
+    if(!db){
+
+      showMessage(
+        '❌ Firebase غير متصل.',
+        false
+      );
+
+      return;
+    }
+
+    const productName =
+      nameInput.value.trim();
+
+    const productPrice =
+      Number(priceInput.value);
+
+    const productOld =
+      Number(oldInput.value) || productPrice;
+
+    const productCat =
+      cat.value;
+
+    const productRating =
+      Number(ratingInput.value) || 5;
+
+
+    if(!productName){
+
+      showMessage(
+        '⚠️ اكتب اسم المنتج.',
+        false
+      );
+
+      return;
+    }
+
+    if(!productPrice || productPrice <= 0){
+
+      showMessage(
+        '⚠️ اكتب سعر المنتج.',
+        false
+      );
+
+      return;
+    }
+
+
+    saveBtn.disabled = true;
+
+    saveBtn.textContent =
+      '⏳ جاري الحفظ...';
+
+
+    /* =====================
+       تعديل
+    ===================== */
+
+    if(editing !== null){
+
+      const productRef =
+        db.collection('products')
+          .doc(String(editing));
+
+
+      const updateData = {
+
+        name: productName,
+
+        price: productPrice,
+
+        old: productOld,
+
+        cat: productCat,
+
+        rating: productRating,
+
+        updatedAt:
+          firebase.firestore.FieldValue.serverTimestamp()
+
+      };
+
+
+      if(imageData){
+
+        updateData.image = imageData;
+
+      }
+
+
+      await productRef.update(updateData);
+
+
+      showMessage(
+        '✅ تم تعديل المنتج وحفظه في قاعدة البيانات.',
+        true
+      );
+
+    }
+
+
+    /* =====================
+       إضافة جديد
+    ===================== */
+
+    else{
+
+      const productRef =
+        db.collection('products')
+          .doc();
+
+
+      const newProduct = {
+
+        name: productName,
+
+        price: productPrice,
+
+        old: productOld,
+
+        cat: productCat,
+
+        rating: productRating,
+
+        image: imageData || '',
+
+        icon: '🛍️',
+
+        createdAt:
+          firebase.firestore.FieldValue.serverTimestamp(),
+
+        updatedAt:
+          firebase.firestore.FieldValue.serverTimestamp()
+
+      };
+
+
+      await productRef.set(newProduct);
+
+
+      showMessage(
+        '✅ تم حفظ المنتج بنجاح في قاعدة البيانات.',
+        true
+      );
+
+    }
+
+
+    resetForm();
+
+  }catch(error){
+
+    console.error(
+      'Save error:',
+      error
+    );
+
+    showMessage(
+      '❌ لم يتم الحفظ: ' + error.message,
+      false
+    );
+
+  }finally{
+
+    saveBtn.disabled = false;
+
+    saveBtn.textContent = '💾 حفظ';
+
+  }
+
+}
+
+
+/* =========================
+   Listen to Products
+========================= */
+
+if(db){
+
+  db.collection('products')
+    .onSnapshot(
+
+      snapshot => {
+
+        products = [];
+
+        snapshot.forEach(doc => {
+
+          products.push({
+
+            id: doc.id,
+
+            ...doc.data()
+
+          });
+
+        });
+
+
+        products.sort(function(a,b){
+
+          const aTime =
+            a.createdAt &&
+            a.createdAt.seconds
+              ? a.createdAt.seconds
+              : 0;
+
+          const bTime =
+            b.createdAt &&
+            b.createdAt.seconds
+              ? b.createdAt.seconds
+              : 0;
+
+          return bTime - aTime;
+
+        });
+
+
+        render();
+
+      },
+
+      error => {
+
+        console.error(
+          'Snapshot error:',
+          error
+        );
+
+        showConnection(
+          '🔴 فشل الاتصال بقاعدة البيانات',
+          false
+        );
+
+        showMessage(
+          '❌ خطأ في قراءة المنتجات: ' +
+          error.message,
+          false
+        );
+
+      }
+
+    );
+
+}
+
+
+/* =========================
+   Edit
+========================= */
+
+function edit(id){
+
+  const p =
+    products.find(
+      x => String(x.id) === String(id)
+    );
+
+  if(!p) return;
+
+  editing = id;
+
+  formTitle.textContent =
+    '✏️ تعديل منتج';
+
+  nameInput.value =
+    p.name || '';
+
+  priceInput.value =
+    p.price || '';
+
+  oldInput.value =
+    p.old || '';
+
+  cat.value =
+    p.cat || 'clothes';
+
+  ratingInput.value =
+    p.rating || 5;
+
+  imageData =
+    p.image || '';
+
+  if(imageData){
+
+    preview.style.display =
+      'block';
+
+    preview.innerHTML =
+      '<img src="' +
+      imageData +
+      '" style="width:100%;height:100%;object-fit:contain">';
+
+  }else{
+
+    preview.style.display =
+      'none';
+
+    preview.innerHTML =
+      '';
+
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
+}
+
+
+/* =========================
+   Delete
+========================= */
+
+async function del(id){
+
+  if(!confirm('حذف المنتج؟')) return;
+
+  try{
+
+    await db
+      .collection('products')
+      .doc(String(id))
+      .delete();
+
+    showMessage(
+      '✅ تم حذف المنتج من قاعدة البيانات.',
+      true
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      '❌ فشل حذف المنتج: ' +
+      error.message,
+      false
+    );
+
+  }
+
+}
+
+
+/* =========================
+   Reset
+========================= */
+
+function resetForm(){
+
+  editing = null;
+
+  imageData = '';
+
+  formTitle.textContent =
+    '➕ إضافة منتج';
+
+  nameInput.value = '';
+
+  priceInput.value = '';
+
+  oldInput.value = '';
+
+  cat.value =
+    categories[0].id;
+
+  ratingInput.value = '5';
+
+  imageInput.value = '';
+
+  preview.style.display =
+    'none';
+
+  preview.innerHTML =
+    '';
+
+}
+
+
+/* =========================
+   Message
+========================= */
+
+function showMessage(text, success){
+
+  message.textContent =
+    text;
+
+  message.className =
+    'message ' +
+    (success ? 'success' : 'error');
+
+}
+
+
+/* =========================
+   Money
+========================= */
+
+function money(n){
+
+  return Number(n || 0)
+    .toLocaleString('ar-SA') +
+    ' ل.س';
+
+}
+
+
+/* =========================
+   Render
+========================= */
+
+function render(){
+
+  count.textContent =
+    'عدد المنتجات: ' +
+    products.length;
+
+
+  if(!products.length){
+
+    list.innerHTML =
+      '<div class="loading">' +
+      '📦 لا توجد منتجات حتى الآن' +
+      '</div>';
+
+    return;
+  }
+
+
+  list.innerHTML =
+    products.map(function(p){
+
+      return (
+
+        '<div class="product">' +
+
+          '<div class="thumb">' +
+
+            (
+              p.image
+              ? '<img src="' +
+                p.image +
+                '" alt="">'
+              : (p.icon || '🛍️')
+            )
+
+          +'</div>' +
+
+          '<div class="info">' +
+
+            '<h3>' +
+            escapeHtml(p.name || '') +
+            '</h3>' +
+
+            '<small>' +
+            money(p.price) +
+            '</small>' +
+
+          '</div>' +
+
+          '<button ' +
+          'class="muted" ' +
+          'onclick="edit(\'' +
+          String(p.id) +
+          '\')">' +
+          '✏️' +
+          '</button>' +
+
+          '<button ' +
+          'class="danger" ' +
+          'onclick="del(\'' +
+          String(p.id) +
+          '\')">' +
+          '🗑️' +
+          '</button>' +
+
+        '</div>'
+
+      );
+
+    }).join('');
+
+}
+
+
+/* =========================
+   Escape HTML
+========================= */
+
+function escapeHtml(text){
+
+  return String(text)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+
+}
+
 </script>
+
 </body>
 </html>
